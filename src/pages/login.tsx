@@ -105,12 +105,6 @@ const LoginPage: React.FC = () => {
               />
             </div>
 
-            <div className="text-right mb-6">
-              <Link href="/forgot-password" className="text-green-600 text-sm font-medium">
-                Forgot Password?
-              </Link>
-            </div>
-
             <button
               type="submit"
               className="w-full py-3 bg-green-500 hover:bg-green-600 text-white font-semibold rounded-md text-base transition-colors"
