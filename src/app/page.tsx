@@ -10,6 +10,13 @@ export default function Home() {
       <header className="bg-teal-900 text-white w-full h-16">
         <div className="w-11/12 max-w-6xl mx-auto h-full flex items-center justify-between">
           <Link href="/" className="flex items-center text-white">
+            <Image 
+              src="/logo2.png"
+              alt="VolunThrive Logo"
+              width={60}
+              height={60}
+              className="mr-2"
+            />
             <span className="text-xl font-bold">VolunThrive</span>
           </Link>
           
@@ -45,7 +52,7 @@ export default function Home() {
               <div className="mb-8">
                 <Link 
                   href="/signup"
-                  className="px-6 py-3 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600 transition-colors"
+                  className="px-6 py-3 bg-green-500 text-white font-semibold rounded-md hover:bg-green-600 transition-colors inline-block"
                 >
                   Sign up for VolunThrive
                 </Link>

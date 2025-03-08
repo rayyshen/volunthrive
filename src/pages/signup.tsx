@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
+import Image from "next/image";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { setDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase/initFirebase";
@@ -248,12 +249,19 @@ const SignupPage: React.FC = () => {
     <div className="flex flex-col min-h-screen">
       {/* Top Navigation Bar */}
       <header className="bg-teal-900 text-white w-full h-16">
-        <div className="w-11/12 max-w-6xl mx-auto h-full flex items-center">
-          <Link href="/" className="flex items-center text-white">
-            <span className="text-xl font-bold">VolunThrive</span>
-          </Link>
-        </div>
-      </header>
+  <div className="w-11/12 max-w-6xl mx-auto h-full flex items-center">
+    <Link href="/" className="flex items-center text-white">
+      <Image 
+        src="/logo2.png"
+        alt="VolunThrive Logo"
+        width={60}
+        height={60}
+        className="mr-2"
+      />
+      <span className="text-xl font-bold">VolunThrive</span>
+    </Link>
+  </div>
+</header>
 
       {/* Main Content */}
       <main className="flex-1 bg-gray-50 py-8">

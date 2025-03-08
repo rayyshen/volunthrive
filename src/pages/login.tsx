@@ -31,6 +31,13 @@ const LoginPage: React.FC = () => {
       <header className="bg-teal-900 text-white w-full h-16">
         <div className="w-11/12 max-w-6xl mx-auto h-full flex items-center">
           <Link href="/" className="flex items-center text-white">
+            <Image 
+              src="/logo2.png" // Path is relative to the public folder
+              alt="VolunThrive Logo"
+              width={60} 
+              height={60}
+              className="mr-2"
+            />
             <span className="text-xl font-bold">VolunThrive</span>
           </Link>
         </div>
