@@ -234,7 +234,7 @@ const SignupPage: React.FC = () => {
       });
       
       // Redirect to dashboard
-      router.push("/dashboard");
+      router.push("/home");
       
     } catch (error: any) {
       setError(error.message);

@@ -1,8 +1,12 @@
 export interface Posting {
-    id?: string;          // Firestore document ID (optional in interface)
+    id?: string;
     title: string;
     description: string;
-    date: string;         // e.g. "2025-03-01" (or a more precise ISO string)
-    location?: string;
-    createdAt?: string;   // e.g. "2025-03-01T12:00:00.000Z"
+    date: string;          // e.g. "2025-03-01"
+    location?: string;     // general location for display
+    requiredInterests?: string[];
+    requiredSkills?: string[];
+    requiredAvailability?: string;
+    requiredLocation?: string;  // e.g. "New York, NY"
+    createdAt?: string;
   }
