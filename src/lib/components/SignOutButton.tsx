@@ -1,5 +1,5 @@
 import { signOut } from "firebase/auth";
-import { auth } from "../firebase/initFirebase";
+import { auth } from "../../firebase/initFirebase";
 
 function SignOutButton() {
   const handleSignOut = async () => {

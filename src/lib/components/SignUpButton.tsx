@@ -1,7 +1,7 @@
 // components/SignupButton.tsx
 import React from "react";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../firebase/initFirebase";
+import { auth } from "../../firebase/initFirebase";
 import { useRouter } from "next/router";
 
 interface SignupButtonProps {
