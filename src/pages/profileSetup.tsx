@@ -102,6 +102,7 @@ const ProfileSetup: React.FC = () => {
           onChange={(e) => setInterests(e.target.value)}
         />
 
+        <label>Address</label>
         <input
           type="text"
           value={interests}
