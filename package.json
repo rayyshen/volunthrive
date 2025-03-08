@@ -11,9 +11,9 @@
   "dependencies": {
     "firebase": "^11.4.0",
     "next": "15.2.1",
-    "postcss": "^8.5.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "tailwind": "^4.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
@@ -21,8 +21,10 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "autoprefixer": "^10.4.20",
     "eslint": "^9",
     "eslint-config-next": "15.2.1",
+    "postcss": "^8.5.3",
     "tailwindcss": "^4.0.12",
     "typescript": "^5"
   }

@@ -17,7 +17,7 @@ const LoginPage: React.FC = () => {
       console.log("Logged in:", userCredential.user.uid);
 
       // Redirect after login
-      router.push("/dashboard");
+      router.push("/home");
     } catch (error) {
       console.error("Login error:", error);
     }
