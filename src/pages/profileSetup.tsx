@@ -60,7 +60,7 @@ const ProfileSetup: React.FC = () => {
       );
 
       console.log("Profile updated");
-      router.push("/dashboard");
+      router.push("/home");
     } catch (error) {
       console.error("Error updating profile:", error);
     }
@@ -96,6 +96,12 @@ const ProfileSetup: React.FC = () => {
         />
 
         <label>Interests (comma-separated):</label>
+        <input
+          type="text"
+          value={interests}
+          onChange={(e) => setInterests(e.target.value)}
+        />
+
         <input
           type="text"
           value={interests}
