@@ -1,92 +1,82 @@
-import React, { useState, FormEvent } from "react";
+// pages/postings.tsx (modified to filter by user’s address)
+import React, { useEffect, useState } from "react";
 import { db } from "../firebase/initFirebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
-import { useRouter } from "next/router";
-import type { NextPage } from "next";
+import { collection, getDocs, query, where } from "firebase/firestore";
+import { useAuth } from "../context/AuthContext";
+import { doc, getDoc } from "firebase/firestore";
+import { UserProfile } from "../types/user";
+import { Posting } from "../types/posting";
 
-const NewPostingPage: NextPage = () => {
-  const router = useRouter();
+export default function PostingsPage() {
+  const { currentUser } = useAuth();
+  const [postings, setPostings] = useState<Posting[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
+  useEffect(() => {
+    const fetchFilteredPostings = async () => {
+      setLoading(true);
+      try {
+        let userAddress = "";
+        if (currentUser) {
+          // Fetch the user’s profile doc
+          const userDocSnap = await getDoc(doc(db, "users", currentUser.uid));
+          if (userDocSnap.exists()) {
+            const userData = userDocSnap.data() as UserProfile;
+            userAddress = userData.address || "";
+          }
+        }
 
-  const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault();
+        // If user has an address, we filter. Otherwise, we just fetch all.
+        let q;
+        if (userAddress) {
+          q = query(collection(db, "postings"), where("location", "==", userAddress));
+        } else {
+          q = collection(db, "postings");
+        }
 
-    try {
-      await addDoc(collection(db, "postings"), {
-        title,
-        description,
-        date,
-        location,
-        // Or store a Firestore server timestamp here
-        createdAt: serverTimestamp(),
-      });
+        const snapshot = await getDocs(q);
+        const results: Posting[] = snapshot.docs.map((docSnap) => {
+          const data = docSnap.data();
+          return {
+            id: docSnap.id,
+            title: data.title,
+            description: data.description,
+            date: data.date,
+            location: data.location,
+            createdAt: data.createdAt ? data.createdAt.toDate().toISOString() : undefined
+          };
+        });
 
-      // Optionally redirect user to /postings or show a success message
-      router.push("/postings");
-    } catch (error) {
-      console.error("Error creating new posting:", error);
-    }
-  };
+        setPostings(results);
+      } catch (error) {
+        console.error("Error fetching postings:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchFilteredPostings();
+  }, [currentUser]);
+
+  if (loading) {
+    return <p>Loading postings...</p>;
+  }
+
+  if (postings.length === 0) {
+    return <p>No postings found (for your location).</p>;
+  }
 
   return (
-    <div className="max-w-md mx-auto p-4">
-      <h1 className="text-xl font-bold mb-4">Create a New Posting</h1>
-      <form onSubmit={handleSubmit}>
-        <label className="block mb-2">
-          Title:
-          <input
-            className="border border-gray-300 p-2 w-full"
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </label>
-
-        <label className="block mb-2">
-          Description:
-          <textarea
-            className="border border-gray-300 p-2 w-full"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            required
-          />
-        </label>
-
-        <label className="block mb-2">
-          Date:
-          <input
-            className="border border-gray-300 p-2 w-full"
-            type="date"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
-            required
-          />
-        </label>
-
-        <label className="block mb-2">
-          Location:
-          <input
-            className="border border-gray-300 p-2 w-full"
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          />
-        </label>
-
-        <button
-          type="submit"
-          className="bg-blue-500 text-white px-4 py-2 mt-4 rounded"
-        >
-          Create Posting
-        </button>
-      </form>
+    <div className="max-w-2xl mx-auto p-4">
+      <h1 className="text-2xl font-bold mb-4">Postings Near You</h1>
+      {postings.map((p) => (
+        <div key={p.id} className="border border-gray-300 p-4 mb-4 rounded">
+          <h2 className="text-xl font-semibold">{p.title}</h2>
+          <p className="text-gray-600">Date: {p.date}</p>
+          <p className="text-gray-600">Location: {p.location}</p>
+          <p className="mt-2">{p.description}</p>
+        </div>
+      ))}
     </div>
   );
-};
-
-export default NewPostingPage;
+}

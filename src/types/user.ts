@@ -1,11 +1,13 @@
 // types/user.ts
 export interface UserProfile {
-    name: string;
-    age?: number;
-    email: string;
-    skills?: string[];
-    interests?: string[];
-    location?: string[];
-    createdAt?: string;
-    updatedAt?: string;
-  }
+  name: string;
+  age?: number;
+  email: string;
+  skills?: string[];
+  interests?: string[];
+  preferredCauses?: string[];
+  availability?: string;
+  address?: string;           // new field for storing address
+  createdAt?: string;
+  updatedAt?: string;
+}
