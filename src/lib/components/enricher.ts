@@ -3,9 +3,9 @@
 export type LocationEnrichmentData = { coordinates?: { lat: number; lng: number; }; address?: string };
 
 export async function addressEnricher(name: string): Promise<LocationEnrichmentData> {
-    let api = '&key=' + process.env.GOOGLE_MAPS_API_KEY;
+    const api = '&key=' + process.env.GOOGLE_MAPS_API_KEY;
 
-    let params = new URLSearchParams({
+    const params = new URLSearchParams({
         input: name,
         inputtype: 'textquery',
     });

@@ -1,6 +1,6 @@
 // pages/login.tsx
 import React, { useState } from "react";
-import type { FormEvent } from "react";
+// import type { FormEvent } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase/initFirebase";
 import { useRouter } from "next/router";
@@ -61,7 +61,7 @@ const Login: React.FC = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                I'm a Volunteer
+                I&apos;m a Volunteer
               </button>
               <button
                 onClick={() => setActiveTab('nonprofit')}
@@ -71,7 +71,7 @@ const Login: React.FC = () => {
                     : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
                 }`}
               >
-                I'm a Nonprofit
+                I&apos;m a Nonprofit
               </button>
             </nav>
           </div>
@@ -151,7 +151,7 @@ const Login: React.FC = () => {
 
             <div className="text-sm text-center">
               <Link href="/signup" className="font-medium text-green-600 hover:text-green-500">
-                Don't have an account? Sign up
+                <p>Don&apos;t have an account? Sign up</p>
               </Link>
             </div>
           </form>

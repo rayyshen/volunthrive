@@ -87,18 +87,18 @@ const Profile: React.FC = () => {
     }
   };
 
-  const handleEdit = () => {
-    if (userProfile) {
-      // Update form data with current profile values when starting to edit
-      setFormData({
-        name: userProfile.name || "",
-        email: userProfile.email || "",
-        interests: Array.isArray(userProfile.interests) ? userProfile.interests.join(", ") : "",
-        skills: Array.isArray(userProfile.skills) ? userProfile.skills.join(", ") : "",
-      });
-    }
-    setEditing(true);
-  };
+//   const handleEdit = () => {
+//     if (userProfile) {
+//       // Update form data with current profile values when starting to edit
+//       setFormData({
+//         name: userProfile.name || "",
+//         email: userProfile.email || "",
+//         interests: Array.isArray(userProfile.interests) ? userProfile.interests.join(", ") : "",
+//         skills: Array.isArray(userProfile.skills) ? userProfile.skills.join(", ") : "",
+//       });
+//     }
+//     setEditing(true);
+//   };
 
   if (loading) {
     return (

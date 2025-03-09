@@ -1,6 +1,7 @@
 import { UserProfile } from "../types/user";
 import { Posting } from "../types/posting";
-import { LocationEnrichmentData, addressEnricher } from "@/lib/components/enricher";
+import { LocationEnrichmentData } from "@/lib/components/enricher";
+// import { LocationEnrichmentData, addressEnricher } from "@/lib/components/enricher";
 
 
 function hasOverlap(userArray: string[] | undefined, requiredArray: string[] | undefined): boolean {
@@ -95,9 +96,6 @@ export async function calculateMatchScore(posting: Posting, user: UserProfile | 
       }
     }
   }
-
-  // 5. Age - high school opportunities
-
 
   return score;
 }

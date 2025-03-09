@@ -8,14 +8,12 @@ interface SignupButtonProps {
   email: string;
   password: string;
   onSuccess?: () => void;
-  onError?: (error: Error) => void;
 }
 
 const SignupButton: React.FC<SignupButtonProps> = ({
   email,
   password,
   onSuccess,
-  onError,
 }) => {
   const router = useRouter();
 
@@ -26,11 +24,10 @@ const SignupButton: React.FC<SignupButtonProps> = ({
         onSuccess();
       } else {
         // Redirect or default action
-        router.push("/profileSetup");
+        router.push("/");
       }
-    } catch (error: any) {
-      console.error("Signup failed:", error);
-      onError?.(error);
+    } catch (err) {
+      console.error("Signup failed:", err);
     }
   };
 

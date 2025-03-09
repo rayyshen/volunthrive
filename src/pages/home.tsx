@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 import { db } from "../firebase/initFirebase";
 import { collection, getDocs, doc, getDoc } from "firebase/firestore";
 import { useAuth } from "../context/AuthContext";
@@ -12,21 +12,35 @@ import { calculateMatchScore } from "../helpers/matchScore";
 import TruncatedText from "../lib/components/TruncatedText";
 import DateConvert from "../lib/components/dateConvert";
 import SignOutButton from "../lib/components/SignOutButton";
+import { BookmarkButton } from "@/components/BookmarkButton";
 
 const Dashboard: React.FC = () => {
-  const router = useRouter();
+  // const router = useRouter();
   const { currentUser } = useAuth();
   const [searchQuery, setSearchQuery] = useState("");
-  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  // const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
   const [postings, setPostings] = useState<Posting[]>([]);
   const [selectedPosting, setSelectedPosting] = useState<Posting | null>(null);
   const [loading, setLoading] = useState(true);
   const [filteredPostings, setFilteredPostings] = useState<Posting[]>([]);
   const [visiblePostings, setVisiblePostings] = useState(5);
+  // const [bookmarkedPosts, setBookmarkedPosts] = useState<Set<string>>(new Set());
 
   const handleShowMore = () => {
     setVisiblePostings((prev) => prev + 5);
   };
+
+  // const toggleBookmark = (postId: string) => {
+  //   setBookmarkedPosts(prev => {
+  //     const newBookmarks = new Set(prev);
+  //     if (newBookmarks.has(postId)) {
+  //       newBookmarks.delete(postId);
+  //     } else {
+  //       newBookmarks.add(postId);
+  //     }
+  //     return newBookmarks;
+  //   });
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +55,7 @@ const Dashboard: React.FC = () => {
             profile = userDocSnap.data() as UserProfile;
           }
         }
-        setUserProfile(profile);
+        // setUserProfile(profile);
 
         // 2. Fetch all postings
         const snapshot = await getDocs(collection(db, "postings"));
@@ -270,11 +284,7 @@ const Dashboard: React.FC = () => {
                             )} */}
                           </div>
 
-                          <button className="text-gray-400 hover:text-gray-600 ml-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                            </svg>
-                          </button>
+                          <BookmarkButton className="ml-2" />
                         </div>
                       </div>
                     ))}
@@ -376,11 +386,7 @@ const Dashboard: React.FC = () => {
                               RSVP
                             </button>
                           </Link>
-                          <button className="px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                            </svg>
-                          </button>
+                          <BookmarkButton className="px-4 py-3 border border-gray-300 rounded-md hover:bg-gray-50" />
                         </div>
                       </>
                     )}

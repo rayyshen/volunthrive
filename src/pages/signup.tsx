@@ -248,8 +248,8 @@ const SignupPage: React.FC = () => {
             // Redirect to dashboard
             router.push("/home");
 
-        } catch (error: any) {
-            setError(error.message);
+        } catch (err) {
+            console.log(err);
         }
     };
 
@@ -383,7 +383,7 @@ const SignupPage: React.FC = () => {
                             <>
                                 <h1 className="text-2xl font-semibold text-center mb-6">Create Your Account</h1>
                                 <p className="text-gray-600 text-center mb-8">
-                                    You're almost there! Complete your profile to get matched with volunteer opportunities.
+                                    You&apos;re almost there! Complete your profile to get matched with volunteer opportunities.
                                 </p>
 
                                 <StepIndicator currentStep={currentStep} totalSteps={totalSteps} />
