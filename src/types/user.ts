@@ -9,4 +9,5 @@ export interface UserProfile {
   address?: string;           // new field for storing address
   createdAt?: string;
   updatedAt?: string;
+  events?: string[];
 }
