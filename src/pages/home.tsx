@@ -11,7 +11,7 @@ import { Posting } from "../types/posting";
 import { calculateMatchScore } from "../helpers/matchScore";
 import TruncatedText from "../lib/components/TruncatedText";
 import DateConvert from "../lib/components/dateConvert";
-
+import SignOutButton from "../lib/components/SignOutButton";
 
 const Dashboard: React.FC = () => {
   const router = useRouter();
@@ -147,6 +147,7 @@ const Dashboard: React.FC = () => {
             </div>
 
             <div className="flex items-center space-x-6">
+              <Link href="/" className="text-white"><SignOutButton/></Link>
               <Link href="/profile" className="text-white">
                 Profile
               </Link>

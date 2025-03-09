@@ -1,7 +1,8 @@
 // context/AuthContext.tsx
 import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
 import { User, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../firebase/initFirebase";
+import { auth, db } from "../firebase/initFirebase";
+import { doc, setDoc } from "firebase/firestore";
 
 interface AuthContextValue {
   currentUser: User | null;
@@ -42,3 +43,17 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 export function useAuth() {
   return useContext(AuthContext);
 }
+
+const createInitialUserProfile = async (user: any) => {
+  const initialProfile = {
+    uid: user.uid,
+    name: user.displayName || '',
+    email: user.email || '',
+    interests: [],
+    skills: [],
+    createdAt: new Date(),
+  };
+  
+  await setDoc(doc(db, "users", user.uid), initialProfile);
+  return initialProfile;
+};
