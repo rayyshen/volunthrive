@@ -1,8 +1,8 @@
-# [🫂  VolunThrive](http://volunthrive.ray-shen.com)
+# [🫂  VolunThrive](http://volunthrive.ray-shen.me:3000)
 
 VolunThrive is a dynamic volunteer-matching platform that connects passionate individuals to local nonprofit opportunities tailored to their skills, interests, location, and availability. Volunteers create personalized profiles, and our matching algorithm highlights the most relevant volunteer opportunities based on their unique preferences. Through streamlined sign-ups and intuitive interfaces, VolunThrive makes it effortless for users to engage meaningfully with their communities. Created at [HackTJ 12.0](https://hacktj.org/)
 
-## [🌍 Live demo](http://volunthrive.ray-shen.com)
+## [🌍 Live demo](http://volunthrive.ray-shen.me:3000)
 
 Create an account and browse volunteer events in the Northern Virginia area at https://www.volunthrive.com/
 
