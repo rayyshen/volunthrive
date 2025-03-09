@@ -118,12 +118,12 @@ const SignupPage: React.FC = () => {
       question: "What is your availability for volunteering?",
       type: "single",
       options: [
-        { value: "weekends", label: "Weekends only" },
-        { value: "evenings", label: "Weekday evenings" },
-        { value: "flexible", label: "Flexible schedule" },
-        { value: "fullTime", label: "Full-time/Gap year" },
-        { value: "remote", label: "Remote only" },
-        { value: "occasional", label: "Occasional/One-time events" },
+        { value: "Weekends", label: "Weekends only" },
+        { value: "Evenings", label: "Weekday evenings" },
+        { value: "Flexible", label: "Flexible schedule" },
+        { value: "FullTime", label: "Full-time/Gap year" },
+        { value: "Remote", label: "Remote only" },
+        { value: "Occasional", label: "Occasional/One-time events" },
       ]
     },
     {
