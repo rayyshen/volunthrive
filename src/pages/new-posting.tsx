@@ -34,12 +34,12 @@ const SKILL_OPTIONS = [
 ];
 
 const AVAILABILITY_OPTIONS = [
-  "weekends",
-  "evenings",
-  "flexible",
-  "fullTime",
-  "remote",
-  "occasional"
+  "Weekends",
+  "Evenings",
+  "Flexible",
+  "FullTime",
+  "Remote",
+  "Occasional"
 ];
 
 // Single-select location examples:
