@@ -55,6 +55,7 @@ const SignupPage: React.FC = () => {
     email: "",
     password: "",
     confirmPassword: "",
+    address: "",
   });
   
   // Error state
@@ -232,6 +233,7 @@ const SignupPage: React.FC = () => {
         availability: formData.availability,
         locationPreference: formData.locationPreference,
         createdAt: new Date().toISOString(),
+        address: formData.address
       });
       
       // Redirect to dashboard
@@ -413,6 +415,17 @@ const SignupPage: React.FC = () => {
                       type="email"
                       value={formData.email}
                       onChange={(e) => handleTextInput("email", e.target.value)}
+                      className="w-full p-3 border border-gray-300 rounded-md"
+                      required
+                    />
+                  </div>
+
+                  <div className="mb-4">
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
+                    <input
+                      type="text"
+                      value={formData.address}
+                      onChange={(e) => handleTextInput("address", e.target.value)}
                       className="w-full p-3 border border-gray-300 rounded-md"
                       required
                     />

@@ -21,7 +21,12 @@ const Dashboard: React.FC = () => {
   const [postings, setPostings] = useState<Posting[]>([]);
   const [selectedPosting, setSelectedPosting] = useState<Posting | null>(null);
   const [loading, setLoading] = useState(true);
-const [filteredPostings, setFilteredPostings] = useState<Posting[]>([]);
+  const [filteredPostings, setFilteredPostings] = useState<Posting[]>([]);
+  const [visiblePostings, setVisiblePostings] = useState(5);
+
+  const handleShowMore = () => {
+    setVisiblePostings((prev) => prev + 5);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,8 +81,8 @@ const [filteredPostings, setFilteredPostings] = useState<Posting[]>([]);
 
         // 4. Store sorted postings
         setPostings(postingsWithScores);
-setFilteredPostings(postingsWithScores); // Initialize filtered postings
-        
+        setFilteredPostings(postingsWithScores); // Initialize filtered postings
+
         // Set the first posting as selected
         if (postingsWithScores.length > 0) {
           setSelectedPosting(postingsWithScores[0]);
@@ -94,11 +99,11 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-        const query = searchQuery.toLowerCase();
-    const filtered = postings.filter(posting => 
+    const query = searchQuery.toLowerCase();
+    const filtered = postings.filter(posting =>
       posting.title.toLowerCase().includes(query) ||
       posting.description.toLowerCase().includes(query) ||
-            (posting.location ?? "").toLowerCase().includes(query)
+      (posting.location ?? "").toLowerCase().includes(query)
     );
     setFilteredPostings(filtered);
   };
@@ -112,16 +117,16 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               <Link href="/" className="flex items-center text-white mr-8">
-                <Image 
-                  src="/logo2.png" 
+                <Image
+                  src="/logo2.png"
                   alt="VolunThrive Logo"
-                  width={60} 
+                  width={60}
                   height={60}
                   className="mr-2"
                 />
                 <span className="text-xl font-bold">VolunThrive</span>
               </Link>
-              
+
               <form onSubmit={handleSearch} className="hidden md:flex items-center">
                 <div className="relative">
                   <input
@@ -140,7 +145,7 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                 </button>
               </form>
             </div>
-            
+
             <div className="flex items-center space-x-6">
               <Link href="/profile" className="text-white">
                 Profile
@@ -175,7 +180,7 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
           </button>
         </form>
       </div>
-      
+
       {/* Main Content */}
       <main className="flex-1 bg-gray-50 py-6">
         <div className="w-11/12 max-w-6xl mx-auto">
@@ -190,7 +195,7 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                 <h2 className="text-2xl font-semibold text-gray-800">Volunteer Opportunities</h2>
                 <p className="text-gray-600">Explore opportunities matching your skills and interests</p>
               </div>
-              
+
               {filteredPostings.length === 0 ? (
                 <div className="bg-white rounded-lg shadow p-6 text-center">
                   <p className="text-gray-600 mb-2">No volunteer opportunities found.</p>
@@ -214,8 +219,8 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                               </h3>
                             </div>
                           </div>
-                          <button 
-                            onClick={() => window.scrollTo({top: document.body.scrollHeight, behavior: 'smooth'})}
+                          <button
+                            onClick={() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' })}
                             className="w-full py-2 bg-green-500 hover:bg-green-600 text-white font-medium rounded-md transition-colors text-sm"
                           >
                             View Details
@@ -223,35 +228,34 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                         </div>
                       )}
                     </div>
-                    
+
                     {/* Opportunities List */}
-                    {filteredPostings.map((posting) => (
-                      <div 
-                        key={posting.id} 
-                        className={`bg-white mb-4 rounded-lg shadow-sm border-2 p-4 cursor-pointer transition-colors ${
-                          selectedPosting?.id === posting.id 
-                            ? 'border-green-500' 
-                            : 'border-gray-200 hover:border-green-300'
-                        }`}
+                    {filteredPostings.slice(0, visiblePostings).map((posting) => (
+                      <div
+                        key={posting.id}
+                        className={`bg-white mb-4 rounded-lg shadow-sm border-2 p-4 cursor-pointer transition-colors ${selectedPosting?.id === posting.id
+                          ? 'border-green-500'
+                          : 'border-gray-200 hover:border-green-300'
+                          }`}
                         onClick={() => setSelectedPosting(posting)}
                       >
                         <div className="flex">
-                          
+
                           <div className="flex-1">
                             <h3 className="text-lg font-semibold text-gray-900 mb-1">
                               {posting.title}
                             </h3>
-                            <p className="text-gray-600 text-sm"><DateConvert text={posting.date}/></p>
+                            <p className="text-gray-600 text-sm"><DateConvert text={posting.date} /></p>
                             <p className="text-gray-600 text-sm">{posting.location}</p>
-                            <p className="text-sm"><TruncatedText text={posting.description} maxLength={200}/></p>
-                            
+                            <p className="text-sm"><TruncatedText text={posting.description} maxLength={200} /></p>
+
                             {/* <div className="mt-2 flex items-center">
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-gray-500 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                               </svg>
                               <span className="text-sm text-gray-600">{posting.commitment}</span>
                             </div> */}
-                            
+
                             {/* {posting.score !== undefined && (
                               <div className="mt-2 flex items-center">
                                 <div className={`h-2 rounded-full w-28 bg-gray-200 mr-2 overflow-hidden`}>
@@ -264,7 +268,7 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                               </div>
                             )} */}
                           </div>
-                          
+
                           <button className="text-gray-400 hover:text-gray-600 ml-2">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
@@ -273,15 +277,20 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                         </div>
                       </div>
                     ))}
-                    
+
                     {/* Show more button */}
                     <div className="text-center mt-6 mb-8 lg:mb-0">
-                      <button className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-50">
-                        Show More Opportunities
-                      </button>
+                      {visiblePostings < filteredPostings.length && (
+                        <button
+                          onClick={handleShowMore}
+                          className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 font-medium hover:bg-gray-50"
+                        >
+                          Show More Opportunities
+                        </button>
+                      )}
                     </div>
                   </div>
-                  
+
                   {/* Right Column - Opportunity Details */}
                   <div className="w-full lg:w-1/2 bg-white rounded-lg shadow-sm border border-gray-200 p-6 sticky top-4">
                     {selectedPosting && (
@@ -291,12 +300,12 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                             <h2 className="text-2xl font-bold text-gray-900 mb-1">
                               {selectedPosting.title}
                             </h2>
-                                                        <p className="text-gray-600">
+                            <p className="text-gray-600">
                               {selectedPosting.location}
                             </p>
                           </div>
                         </div>
-                        
+
                         {/* Details */}
                         <div className="mb-6">
                           <div className="flex flex-wrap mb-4">
@@ -306,10 +315,10 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                               </svg>
                               <div>
                                 <p className="text-sm text-gray-500">Start Date</p>
-                                <p className="font-medium"><DateConvert text={selectedPosting.date}/></p>
+                                <p className="font-medium"><DateConvert text={selectedPosting.date} /></p>
                               </div>
                             </div>
-            
+
                             <div className="w-full sm:w-1/2 flex items-center mb-2">
                               <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
@@ -320,7 +329,7 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                               </div>
                             </div>
                           </div>
-                          
+
                           <div className="mb-4">
                             <h3 className="text-lg font-semibold mb-2">Description</h3>
                             <p className="text-gray-700">{selectedPosting.description}</p>
@@ -329,7 +338,7 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                           <div className="mb-4">
                             <h3 className="text-lg font-semibold mb-2">Location</h3>
                             <p className="text-gray-700">{selectedPosting.location}</p>
-<div className="mt-4">
+                            <div className="mt-4">
                               <iframe
                                 width="100%"
                                 height="300"
@@ -340,30 +349,32 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
                               ></iframe>
                             </div>
                           </div>
-                    
-                          
+
+
                           {/* <div className="mb-4">
                             <h3 className="text-lg font-semibold mb-2">Requirements</h3>
                             <p className="text-gray-700">{selectedPosting.requirements}</p>
                           </div> */}
-                          
+
                           {/* <div className="mb-6">
                             <h3 className="text-lg font-semibold mb-2">Impact</h3>
                             <p className="text-gray-700">{selectedPosting.impact}</p>
                           </div> */}
-                          
+
                           {/* <div className="mb-6 p-4 bg-gray-50 rounded-md">
                             <h3 className="text-lg font-semibold mb-2">Contact</h3>
                             <p className="text-gray-700 mb-1">{selectedPosting.contactPerson}</p>
                             <p className="text-gray-700">{selectedPosting.contactEmail}</p>
                           </div> */}
                         </div>
-                        
+
                         {/* Action buttons */}
                         <div className="flex space-x-4">
-                          <button className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-md transition-colors">
-                            Apply Now
-                          </button>
+                          <Link target="_blank" href="https://www.signupgenius.com/" className="flex-1 py-3 bg-green-500 hover:bg-green-600 text-white font-medium rounded-md transition-colors">
+                            <button className="justify-center w-full">
+                              RSVP
+                            </button>
+                          </Link>
                           <button className="px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
@@ -379,7 +390,7 @@ setFilteredPostings(postingsWithScores); // Initialize filtered postings
           )}
         </div>
       </main>
-      
+
       {/* Footer */}
       <footer className="bg-gray-100 py-6">
         <div className="w-11/12 max-w-6xl mx-auto">
