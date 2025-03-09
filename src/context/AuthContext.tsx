@@ -44,14 +44,15 @@ export function useAuth() {
   return useContext(AuthContext);
 }
 
-const createInitialUserProfile = async (user: any) => {
+const createInitialUserProfile = async (user: any, age: number) => {
   const initialProfile = {
     uid: user.uid,
     name: user.displayName || '',
     email: user.email || '',
+    age: age,
     interests: [],
     skills: [],
-    createdAt: new Date(),
+    createdAt: new Date().toISOString(),
   };
   
   await setDoc(doc(db, "users", user.uid), initialProfile);

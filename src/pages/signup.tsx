@@ -56,6 +56,7 @@ const SignupPage: React.FC = () => {
         password: "",
         confirmPassword: "",
         address: "",
+        age: "",
     });
 
     // Error state
@@ -216,6 +217,13 @@ const SignupPage: React.FC = () => {
         if (!formData.password) return setError("Password is required");
         if (formData.password.length < 6) return setError("Password must be at least 6 characters");
         if (formData.password !== formData.confirmPassword) return setError("Passwords don't match");
+        if (!formData.age) return setError("Age is required");
+
+        const ageNum = parseInt(formData.age);
+        if (isNaN(ageNum) || ageNum < 13 || ageNum > 120) {
+            setError("Please enter a valid age between 13 and 120");
+            return;
+        }
 
         try {
             // Create user in Firebase
@@ -233,7 +241,8 @@ const SignupPage: React.FC = () => {
                 availability: formData.availability,
                 locationPreference: formData.locationPreference,
                 createdAt: new Date().toISOString(),
-                address: formData.address
+                address: formData.address,
+                age: ageNum,
             });
 
             // Redirect to dashboard
@@ -423,6 +432,19 @@ const SignupPage: React.FC = () => {
                                             onChange={(e) => handleTextInput("address", e.target.value)}
                                             className="w-full p-3 border border-gray-300 rounded-md"
                                             required
+                                        />
+                                    </div>
+
+                                    <div className="mb-4">
+                                        <label className="block text-sm font-medium text-gray-700 mb-1">Age</label>
+                                        <input
+                                            type="number"
+                                            value={formData.age}
+                                            onChange={(e) => handleTextInput("age", e.target.value)}
+                                            className="w-full p-3 border border-gray-300 rounded-md"
+                                            required
+                                            min="13"
+                                            max="120"
                                         />
                                     </div>
 

@@ -72,10 +72,10 @@ const Dashboard: React.FC = () => {
         });
 
         // 3. Calculate match scores and sort descending
-        const postingsWithScores = rawPostings.map((posting) => {
-          const score = calculateMatchScore(posting, profile);
+        const postingsWithScores = await Promise.all(rawPostings.map(async (posting) => {
+          const score = await calculateMatchScore(posting, profile);
           return { ...posting, score };
-        });
+        }));
 
         postingsWithScores.sort((a, b) => b.score - a.score);
 

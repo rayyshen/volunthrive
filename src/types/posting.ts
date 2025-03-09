@@ -10,4 +10,5 @@ export interface Posting {
     requiredLocation?: string;  // e.g. "New York, NY"
     createdAt?: string;
     attendees?: string[];
+    score?: number;
   }

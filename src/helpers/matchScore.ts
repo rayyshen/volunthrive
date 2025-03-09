@@ -1,5 +1,7 @@
 import { UserProfile } from "../types/user";
 import { Posting } from "../types/posting";
+import { LocationEnrichmentData, addressEnricher } from "@/lib/components/enricher";
+
 
 function hasOverlap(userArray: string[] | undefined, requiredArray: string[] | undefined): boolean {
   if (!userArray || userArray.length === 0) return false;
@@ -20,33 +22,23 @@ function calculateDistance(lat1: number, lon1: number, lat2: number, lon2: numbe
   return R * c; // Distance in miles
 }
 
-// Get coordinates from Google Geocoding API
-async function getCoordinates(address: string): Promise<{lat: number, lng: number} | null> {
-  try {
-    const apiKey = process.env.GOOGLE_MAPS_API_KEY;
-    if (!apiKey) {
-      console.error("Google Maps API key is missing");
-      return null;
-    }
+const getCoordinates = async (location: string): Promise<{lat: number, lng: number} | null> => {
+  if (!location) return null;
 
-    const encodedAddress = encodeURIComponent(address);
-    const response = await fetch(
-      `https://maps.googleapis.com/maps/api/geocode/json?address=${encodedAddress}&key=${apiKey}`
-    );
+  try {
+    const res = await fetch('/api/location-enrichment?'
+      + new URLSearchParams({ name: location }));
+    const data: LocationEnrichmentData = await res.json();
     
-    const data = await response.json();
-    
-    if (data.status === "OK" && data.results && data.results.length > 0) {
-      const location = data.results[0].geometry.location;
+    if (data.coordinates) {
       return {
-        lat: location.lat,
-        lng: location.lng
+        lat: data.coordinates.lat,
+        lng: data.coordinates.lng
       };
     }
-    
     return null;
   } catch (error) {
-    console.error("Error fetching coordinates:", error);
+    console.error("Error enriching location:", error);
     return null;
   }
 }
@@ -82,6 +74,8 @@ export async function calculateMatchScore(posting: Posting, user: UserProfile | 
   if (posting.requiredLocation && user.address) {
     const userCoords = await getCoordinates(user.address);
     const postingCoords = await getCoordinates(posting.requiredLocation);
+
+    console.log(userCoords, postingCoords);
     
     if (userCoords && postingCoords) {
       const distance = calculateDistance(
@@ -101,6 +95,9 @@ export async function calculateMatchScore(posting: Posting, user: UserProfile | 
       }
     }
   }
+
+  // 5. Age - high school opportunities
+
 
   return score;
 }
