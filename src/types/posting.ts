@@ -9,4 +9,5 @@ export interface Posting {
     requiredAvailability?: string;
     requiredLocation?: string;  // e.g. "New York, NY"
     createdAt?: string;
+    attendees?: string[];
   }

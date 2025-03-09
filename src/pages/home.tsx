@@ -21,7 +21,7 @@ const Dashboard: React.FC = () => {
   const [postings, setPostings] = useState<Posting[]>([]);
   const [selectedPosting, setSelectedPosting] = useState<Posting | null>(null);
   const [loading, setLoading] = useState(true);
-  const [filteredPostings, setFilteredPostings] = useState<Posting[]>([]);
+const [filteredPostings, setFilteredPostings] = useState<Posting[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -76,7 +76,7 @@ const Dashboard: React.FC = () => {
 
         // 4. Store sorted postings
         setPostings(postingsWithScores);
-        setFilteredPostings(postingsWithScores); // Initialize filtered postings
+setFilteredPostings(postingsWithScores); // Initialize filtered postings
         
         // Set the first posting as selected
         if (postingsWithScores.length > 0) {
@@ -94,11 +94,11 @@ const Dashboard: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    const query = searchQuery.toLowerCase();
+        const query = searchQuery.toLowerCase();
     const filtered = postings.filter(posting => 
       posting.title.toLowerCase().includes(query) ||
       posting.description.toLowerCase().includes(query) ||
-      (posting.location ?? "").toLowerCase().includes(query)
+            (posting.location ?? "").toLowerCase().includes(query)
     );
     setFilteredPostings(filtered);
   };
@@ -291,7 +291,7 @@ const Dashboard: React.FC = () => {
                             <h2 className="text-2xl font-bold text-gray-900 mb-1">
                               {selectedPosting.title}
                             </h2>
-                            <p className="text-gray-600">
+                                                        <p className="text-gray-600">
                               {selectedPosting.location}
                             </p>
                           </div>
@@ -329,7 +329,7 @@ const Dashboard: React.FC = () => {
                           <div className="mb-4">
                             <h3 className="text-lg font-semibold mb-2">Location</h3>
                             <p className="text-gray-700">{selectedPosting.location}</p>
-                            <div className="mt-4">
+<div className="mt-4">
                               <iframe
                                 width="100%"
                                 height="300"
