@@ -12,6 +12,9 @@ import { calculateMatchScore } from "../helpers/matchScore";
 import TruncatedText from "../lib/components/TruncatedText";
 import {useFormatter} from 'next-intl';
 import DateConvert from "../lib/components/dateConvert";
+import { Calendar } from 'lucide-react';
+import { Clock } from 'lucide-react';
+import { Bookmark } from 'lucide-react';
 
 
 const Dashboard: React.FC = () => {
@@ -309,9 +312,7 @@ const Dashboard: React.FC = () => {
                         <div className="mb-6">
                           <div className="flex flex-wrap mb-4">
                             <div className="w-full sm:w-1/2 flex items-center mb-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                              </svg>
+                            <Calendar className="h-5 w-5 text-gray-500 mr-2" />
                               <div>
                                 <p className="text-sm text-gray-500">Start Date</p>
                                 <p className="font-medium"><DateConvert text={selectedPosting.date}/></p>
@@ -319,9 +320,7 @@ const Dashboard: React.FC = () => {
                             </div>
             
                             <div className="w-full sm:w-1/2 flex items-center mb-2">
-                              <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
-                              </svg>
+                            <Clock className="h-5 w-5 text-gray-500 mr-2" />
                               <div>
                                 <p className="text-sm text-gray-500">Commitment</p>
                                 <p className="font-medium">{selectedPosting.requiredAvailability}</p>
@@ -363,10 +362,9 @@ const Dashboard: React.FC = () => {
                             Apply Now
                           </button>
                           <button className="px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                            </svg>
-                          </button>
+  <Bookmark className="h-5 w-5" />
+</button>
+
                         </div>
                       </>
                     )}

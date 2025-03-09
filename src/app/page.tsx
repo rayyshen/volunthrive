@@ -10,7 +10,7 @@ export default function Home() {
       <header className="bg-teal-900 text-white w-full h-16">
         <div className="w-11/12 max-w-6xl mx-auto h-full flex items-center justify-between">
           <Link href="/" className="flex items-center text-white">
-            <Image 
+            <Image
               src="/logo2.png"
               alt="VolunThrive Logo"
               width={60}
@@ -89,15 +89,18 @@ export default function Home() {
             </div>
 
             {/* Right Column - Image */}
-            <div className="w-full md:w-1/2">
-              <div className="relative h-64 sm:h-72 md:h-80 lg:h-96 w-full rounded-lg overflow-hidden">
-                <Image
-                  src="/api/placeholder/600/600"
-                  alt="Volunteer using VolunThrive app"
-                  fill
-                  className="object-cover"
-                  priority
-                />
+            <div className="w-full md:w-1/2 relative">
+              <div className="absolute inset-0 md:static md:h-full">
+                <div className="relative h-64 sm:h-72 md:h-full w-full">
+                  <Image
+                    src="/logoDesign.png"
+                    alt="Volunteer opportunities collage"
+                    width={800}  // Set specific dimensions instead of fill
+                    height={1200}
+                    className="w-full h-full object-cover"
+                    priority
+                  />
+                </div>
               </div>
             </div>
           </div>
