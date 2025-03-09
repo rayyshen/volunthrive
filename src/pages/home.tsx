@@ -21,6 +21,7 @@ const Dashboard: React.FC = () => {
   const [postings, setPostings] = useState<Posting[]>([]);
   const [selectedPosting, setSelectedPosting] = useState<Posting | null>(null);
   const [loading, setLoading] = useState(true);
+const [filteredPostings, setFilteredPostings] = useState<Posting[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,6 +76,7 @@ const Dashboard: React.FC = () => {
 
         // 4. Store sorted postings
         setPostings(postingsWithScores);
+setFilteredPostings(postingsWithScores); // Initialize filtered postings
         
         // Set the first posting as selected
         if (postingsWithScores.length > 0) {
@@ -92,8 +94,13 @@ const Dashboard: React.FC = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    // Implement search functionality
-    console.log("Searching for:", searchQuery);
+        const query = searchQuery.toLowerCase();
+    const filtered = postings.filter(posting => 
+      posting.title.toLowerCase().includes(query) ||
+      posting.description.toLowerCase().includes(query) ||
+            (posting.location ?? "").toLowerCase().includes(query)
+    );
+    setFilteredPostings(filtered);
   };
 
   return (
@@ -106,10 +113,10 @@ const Dashboard: React.FC = () => {
             <div className="flex items-center">
               <Link href="/" className="flex items-center text-white mr-8">
                 <Image 
-                  src="/logo.svg" 
+                  src="/logo2.png" 
                   alt="VolunThrive Logo"
-                  width={32} 
-                  height={32}
+                  width={60} 
+                  height={60}
                   className="mr-2"
                 />
                 <span className="text-xl font-bold">VolunThrive</span>
@@ -135,20 +142,9 @@ const Dashboard: React.FC = () => {
             </div>
             
             <div className="flex items-center space-x-6">
-              <Link href="/dashboard" className="text-white font-medium">
-                Home
-              </Link>
-              <Link href="/messages" className="text-white">
-                Messages
-              </Link>
               <Link href="/profile" className="text-white">
                 Profile
               </Link>
-              <button className="text-white">
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
-                </svg>
-              </button>
               <div className="h-8 w-8 rounded-full bg-green-500 text-white flex items-center justify-center">
                 <span className="text-sm font-medium">
                   {currentUser ? currentUser.email?.charAt(0).toUpperCase() || 'U' : 'G'}
@@ -195,7 +191,7 @@ const Dashboard: React.FC = () => {
                 <p className="text-gray-600">Explore opportunities matching your skills and interests</p>
               </div>
               
-              {postings.length === 0 ? (
+              {filteredPostings.length === 0 ? (
                 <div className="bg-white rounded-lg shadow p-6 text-center">
                   <p className="text-gray-600 mb-2">No volunteer opportunities found.</p>
                   <p className="text-sm text-gray-500">Check back later or adjust your search criteria.</p>
@@ -229,7 +225,7 @@ const Dashboard: React.FC = () => {
                     </div>
                     
                     {/* Opportunities List */}
-                    {postings.map((posting) => (
+                    {filteredPostings.map((posting) => (
                       <div 
                         key={posting.id} 
                         className={`bg-white mb-4 rounded-lg shadow-sm border-2 p-4 cursor-pointer transition-colors ${
@@ -295,10 +291,7 @@ const Dashboard: React.FC = () => {
                             <h2 className="text-2xl font-bold text-gray-900 mb-1">
                               {selectedPosting.title}
                             </h2>
-                            {/* <p className="text-lg text-gray-700 mb-1">
-                              {selectedPosting.organization}
-                            </p> */}
-                            <p className="text-gray-600">
+                                                        <p className="text-gray-600">
                               {selectedPosting.location}
                             </p>
                           </div>
@@ -336,6 +329,16 @@ const Dashboard: React.FC = () => {
                           <div className="mb-4">
                             <h3 className="text-lg font-semibold mb-2">Location</h3>
                             <p className="text-gray-700">{selectedPosting.location}</p>
+<div className="mt-4">
+                              <iframe
+                                width="100%"
+                                height="300"
+                                frameBorder="0"
+                                style={{ border: 0 }}
+                                src={`https://www.google.com/maps/embed/v1/place?key=AIzaSyAB1oLQM2gXw198eNUjlLWvKfLCSczDBAk&q=${encodeURIComponent(selectedPosting.location || '')}`}
+                                allowFullScreen
+                              ></iframe>
+                            </div>
                           </div>
                     
                           
