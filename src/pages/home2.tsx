@@ -10,6 +10,9 @@ import { UserProfile } from "../types/user";
 import { Posting } from "../types/posting";
 import { calculateMatchScore } from "../helpers/matchScore";
 import TruncatedText from "../lib/components/TruncatedText";
+import {useFormatter} from 'next-intl';
+import DateConvert from "../lib/components/dateConvert";
+
 
 const Dashboard: React.FC = () => {
   const router = useRouter();
@@ -243,7 +246,7 @@ const Dashboard: React.FC = () => {
                             <h3 className="text-lg font-semibold text-gray-900 mb-1">
                               {posting.title}
                             </h3>
-                            <p className="text-gray-600 text-sm">{posting.date}</p>
+                            <p className="text-gray-600 text-sm"><DateConvert text={posting.date}/></p>
                             <p className="text-gray-600 text-sm">{posting.location}</p>
                             <p className="text-sm"><TruncatedText text={posting.description} maxLength={200}/></p>
                             
@@ -311,7 +314,7 @@ const Dashboard: React.FC = () => {
                               </svg>
                               <div>
                                 <p className="text-sm text-gray-500">Start Date</p>
-                                <p className="font-medium">{selectedPosting.date}</p>
+                                <p className="font-medium"><DateConvert text={selectedPosting.date}/></p>
                               </div>
                             </div>
             

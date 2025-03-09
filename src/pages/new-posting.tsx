@@ -259,3 +259,5 @@ const NewPostingPage: NextPage = () => {
 
 export default NewPostingPage;
 
+//git config --global user.email "you@example.com"
+//  git config --global user.name "Your Name"

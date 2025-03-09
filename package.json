@@ -9,9 +9,15 @@
     "lint": "next lint"
   },
   "dependencies": {
+<<<<<<< HEAD
     "axios": "^1.8.2",
+=======
+    "date-fns": "^4.1.0",
+>>>>>>> 55386878a691a2e36ca98be26f43731b32c05571
     "firebase": "^11.4.0",
+    "lucide-react": "^0.479.0",
     "next": "15.2.1",
+    "next-intl": "^3.26.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind": "^4.0.0"
